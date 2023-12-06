@@ -1,0 +1,1 @@
+enum StateWidgetType { sliver, normal }
