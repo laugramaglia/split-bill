@@ -15,17 +15,10 @@ class AllBillsView extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         // Sliver App Bar
-        SliverAppBar(
-          title: const Text('All Bills'),
+        const SliverAppBar(
+          title: Text('All Bills'),
           floating: true,
           snap: true,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () =>
-                  context.router.navigateNamed(AddBillNavigationRouter.name),
-            ),
-          ],
         ),
         Builder(builder: (context) {
           final state = context.watch<AllBillsProvider>().state;

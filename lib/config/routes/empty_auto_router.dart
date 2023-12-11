@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
-class AddBillNavigationRouter extends StatelessWidget {
-  const AddBillNavigationRouter({super.key});
+class EmptyAutoRouter extends StatelessWidget {
+  const EmptyAutoRouter({super.key});
 
   @override
   Widget build(BuildContext context) {

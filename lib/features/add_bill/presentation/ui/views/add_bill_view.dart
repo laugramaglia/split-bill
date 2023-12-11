@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:split_bill/config/routes/app_router.gr.dart';
+import 'package:split_bill/config/routes/routes_names.dart';
 
 @RoutePage()
 class AddBillView extends StatelessWidget {
@@ -29,14 +29,16 @@ class AddBillView extends StatelessWidget {
                 dimension: dimension,
                 icon: Icons.add,
                 title: 'Add Bill',
-                onTap: () => context.router.push(const NewBillView()),
+                onTap: () => context.router.navigateNamed(
+                    RoutesNav.main.navTo + RoutesNav.addBill.navTo),
               ),
               CardButton(
                   dimension: dimension,
                   icon: Icons.group,
                   iconSize: 60,
-                  title: 'Create group',
-                  onTap: () {}),
+                  title: 'Groups',
+                  onTap: () => context.router.navigateNamed(
+                      RoutesNav.main.navTo + RoutesNav.allGroups.navTo)),
             ],
           );
         }),

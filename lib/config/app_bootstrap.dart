@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:split_bill/features/all_bills/domain/repositories/all_bills_repository.dart';
 import 'package:split_bill/features/all_bills/presentation/providers/all_bills_provider.dart';
+import 'package:split_bill/features/groups/presentation/providers/group_provider.dart';
 
 class AppBootstrap extends StatelessWidget {
   final Widget child;
@@ -18,6 +19,8 @@ class AppBootstrap extends StatelessWidget {
           create: (context) =>
               AllBillsProvider(context, billRepository: AllBillRepository()),
         ),
+        ChangeNotifierProvider<GroupProvider>(
+            create: (context) => GroupProvider(context)),
       ],
       child: child,
     );
