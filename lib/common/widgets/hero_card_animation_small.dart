@@ -15,22 +15,27 @@ class SmallCardHeroAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return Ink(
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        onTap: () {
-          Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-            return HeroCardAnimationBig(
-              width: 400,
-              height: MediaQuery.of(context).size.height - 100,
-              heroTag: heroTag,
-              child: childBig,
-            );
-          }));
-        },
-        child: HeroCardAnimation(
-          heroTag: heroTag,
-          height: 80,
-          child: childSmall,
-        ));
+        color: Theme.of(context).cardColor,
+      ),
+      child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () {
+            Navigator.of(context).push(HeroDialogRoute(builder: (context) {
+              return HeroCardAnimationBig(
+                width: 400,
+                height: MediaQuery.of(context).size.height - 100,
+                heroTag: heroTag,
+                child: childBig,
+              );
+            }));
+          },
+          child: HeroCardAnimation(
+            heroTag: heroTag,
+            child: childSmall,
+          )),
+    );
   }
 }

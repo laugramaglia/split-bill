@@ -19,22 +19,19 @@ class ItemsBillAdapter extends TypeAdapter<ItemsBill> {
     return ItemsBill(
       name: fields[0] as String,
       amount: fields[1] as double,
-      id: fields[2] as String,
-      listPersons: (fields[3] as List).cast<UserBill>(),
+      listPersons: (fields[2] as List).cast<UserBill>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, ItemsBill obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
       ..write(obj.amount)
       ..writeByte(2)
-      ..write(obj.id)
-      ..writeByte(3)
       ..write(obj.listPersons);
   }
 

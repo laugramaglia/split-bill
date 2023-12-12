@@ -9,14 +9,11 @@ class ItemsBill extends HiveObject {
   @HiveField(1)
   final double amount;
   @HiveField(2)
-  final String id;
-  @HiveField(3)
   final List<UserBill> listPersons;
 
   ItemsBill({
     required this.name,
     required this.amount,
-    required this.id,
     required this.listPersons,
   });
 
@@ -31,14 +28,27 @@ class ItemsBill extends HiveObject {
   ItemsBill copyWith({
     String? name,
     double? amount,
-    String? id,
     List<UserBill>? listPersons,
   }) {
     return ItemsBill(
       name: name ?? this.name,
       amount: amount ?? this.amount,
-      id: id ?? this.id,
       listPersons: listPersons ?? this.listPersons,
     );
   }
+
+  factory ItemsBill.fromJson(Map<String, dynamic> json) => ItemsBill(
+        name: json[jsonNameKey],
+        amount: json[jsonAmountKey],
+        listPersons: List<UserBill>.from(
+            json[jsonListPersonsKey].map((x) => UserBill.fromJson(x))),
+      );
+
+  @override
+  String toString() =>
+      'ItemsBill(name: $name, amount: $amount, listPersons: $listPersons)';
+
+  static String jsonNameKey = 'name',
+      jsonAmountKey = 'amount',
+      jsonListPersonsKey = 'listPersons';
 }

@@ -17,8 +17,11 @@ class HeroCardAnimationBig extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: HeroCardAnimation(
-          heroTag: heroTag, height: height, width: width, child: child),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: HeroCardAnimation(
+            heroTag: heroTag, height: height, width: width, child: child),
+      ),
     );
   }
 }

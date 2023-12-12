@@ -24,6 +24,13 @@ class UserBill extends HiveObject {
     );
   }
 
+  factory UserBill.fromJson(Map<String, dynamic> json) => UserBill(
+        name: json[jsonNameKey],
+        hasToPay: json[jsonHasToPayKey],
+      );
+
+  static const String jsonNameKey = 'name', jsonHasToPayKey = 'hasToPay';
+
   @override
   String toString() => 'UserBill(name: $name, hasToPay: $hasToPay)';
 }

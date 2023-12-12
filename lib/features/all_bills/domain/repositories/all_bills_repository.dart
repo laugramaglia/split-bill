@@ -38,6 +38,7 @@ class AllBillRepository {
   Future<(AllBills, AppException?)> updateBill(key, Bill bill) async {
     try {
       await AllBillsHiveBox.instance.updateBill(key, bill);
+
       final allBills = AllBillsHiveBox.instance.getAllBills();
       return (allBills, null);
     } on HiveError catch (e) {

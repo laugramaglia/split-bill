@@ -40,7 +40,7 @@ class _EditeBillViewState extends State<EditeBillView> {
                 );
                 context
                     .read<AllBillsProvider>()
-                    .updateBill(widget.item.key, finalItem);
+                    .updateBill(finalItem, widget.item.key);
               }
             },
             child: const Text('Save'),

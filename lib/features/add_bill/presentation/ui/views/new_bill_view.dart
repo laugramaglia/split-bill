@@ -1,10 +1,29 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:split_bill/config/routes/routes_names.dart';
+import 'package:split_bill/features/add_bill/presentation/ui/widgets/add_item_form.dart';
+import 'package:split_bill/features/all_bills/data/models/bill_model.dart';
+import 'package:split_bill/features/all_bills/data/models/items_bill_model.dart';
+import 'package:split_bill/features/all_bills/presentation/providers/all_bills_provider.dart';
+import 'package:split_bill/features/groups/presentation/ui/widgets/list_groups_small.dart';
 
 @RoutePage()
-class NewBillView extends StatelessWidget {
+class NewBillView extends StatefulWidget {
   const NewBillView({super.key});
 
+  @override
+  State<NewBillView> createState() => _NewBillViewState();
+}
+
+class _NewBillViewState extends State<NewBillView> {
+  final _formKey = GlobalKey<FormState>();
+  List<String> _listUsersStrings = [];
+  String _title = '';
+  List<ItemsBill> _billItems = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,69 +32,65 @@ class NewBillView extends StatelessWidget {
             icon: const Icon(Icons.arrow_back),
             onPressed: () => context.router.pop(),
           ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.check),
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  final Bill bill = Bill(
+                    title: _title,
+                    listItems: _billItems,
+                  );
+                  log(bill.toString());
+                  context.read<AllBillsProvider>().addBill(bill).then((_) {
+                    context.router.pop();
+                  });
+                }
+              },
+            )
+          ],
           title: const Text('New Bill'),
         ),
-        body: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            // add Persons
-            AddPersonForm()
-          ],
-        ));
-  }
-}
-
-class AddPersonForm extends StatefulWidget {
-  const AddPersonForm({super.key});
-
-  @override
-  State<AddPersonForm> createState() => _AddPersonFormState();
-}
-
-class _AddPersonFormState extends State<AddPersonForm> {
-  final _formKey = GlobalKey<FormState>();
-  final _controller = TextEditingController();
-  var listUsers = <String>[];
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // add Persons
-        const Text('Add Persons'),
-        const SizedBox(height: 16),
-        Form(
+        body: Form(
           key: _formKey,
-          child: Column(
-            children: <Widget>[
+          child: ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
               TextFormField(
-                controller: _controller,
+                onChanged: (value) {
+                  setState(() {
+                    _title = value;
+                  });
+                },
                 decoration: const InputDecoration(
-                  labelText: 'Person Name',
+                  labelText: 'Bill title',
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a name';
-                  }
-                  return null;
+              ),
+
+              // read groups
+              const SizedBox(height: 16),
+              const Text('Groups *'),
+              ListGroupsSmall(
+                onChange: (users) {
+                  setState(() {
+                    _listUsersStrings = users ?? [];
+                  });
                 },
               ),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    // add form value to list
-                    setState(() {
-                      listUsers.add(_controller.text);
-                    });
-                  }
+              const SizedBox(height: 32),
+
+              // Add items
+              const Text('Add items *'),
+              AddItemForm(
+                listUsers: _listUsersStrings,
+                onSubmit: (listItems) {
+                  setState(() {
+                    _billItems = listItems;
+                  });
                 },
-                child: const Text('Submit'),
               ),
             ],
           ),
-        ),
-        ...listUsers.map((e) => Text(e)),
-      ],
-    );
+        ));
   }
 }

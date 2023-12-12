@@ -32,4 +32,7 @@ class Bill extends HiveObject {
   }
 
   String get totalAmountString => '\$$_totalAmount';
+
+  @override
+  String toString() => 'Bill(title: $title, listItems: $listItems)';
 }

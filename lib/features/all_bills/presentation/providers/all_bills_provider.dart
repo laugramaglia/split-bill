@@ -19,7 +19,7 @@ class AllBillsProvider extends AsyncStateNotifier<AllBills> {
   // *****************************************
   // * List of bills
   // *****************************************
-  void addBill(Bill bill) async {
+  Future<void> addBill(Bill bill) async {
     setState = LoadingState();
 
     final (bills, error) = await billRepository.addBill(bill);
@@ -30,7 +30,7 @@ class AllBillsProvider extends AsyncStateNotifier<AllBills> {
     setState = DataState(bills);
   }
 
-  Future<void> updateBill(key, Bill bill) async {
+  Future<void> updateBill(Bill bill, [key]) async {
     setState = LoadingState();
 
     final (bills, error) = await billRepository.updateBill(key, bill);
