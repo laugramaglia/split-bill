@@ -11,24 +11,26 @@ class AppRouter extends $AppRouter {
   List<AutoRoute> get routes => [
         /// AllBills route
         AutoRoute(path: '/', page: HomeRoute.page, initial: true, children: [
-          AutoRoute(page: AllBillsView.page, path: 'ds', children: [
-            AutoRoute(
-                page: AllBillsView.page,
-                path: RoutesNav.allBills,
-                initial: true),
-            AutoRoute(page: EditeBillView.page, path: RoutesNav.editBill),
-          ]),
+          AutoRoute(
+              page: AllGroupsEmptyPage.page,
+              path: RoutesNav.allBills,
+              children: [
+                AutoRoute(page: AllBillsView.page, path: ''),
+                AutoRoute(page: EditeBillView.page, path: RoutesNav.editBill),
+                AutoRoute(
+                    path: '${RoutesNav.export}/:id', page: ExportView.page)
+              ]),
 
           //AddBill route
           AutoRoute(
-              page: EmptyAutoRouter.page,
+              page: AddBillEmtyPage.page,
               path: RoutesNav.main,
               initial: true,
               children: [
                 AutoRoute(page: AddBillView.page, path: '', initial: true),
                 AutoRoute(path: RoutesNav.addBill, page: NewBillView.page),
                 AutoRoute(
-                    page: EmptyAutoRouter.page,
+                    page: AddBillEmtyPage.page,
                     path: RoutesNav.allGroups,
                     children: [
                       AutoRoute(page: AllGroupsView.page, path: ''),

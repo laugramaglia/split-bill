@@ -22,8 +22,9 @@ class ItemsBill extends HiveObject {
 
   double get amountPerPerson => amount / totalPersonsPay.length;
 
-  String get amountDividedPersonString =>
-      '\$$amount / ${totalPersonsPay.length} = \$$amountPerPerson';
+  String get amountDividedPersonString => totalPersonsPay.length == 1
+      ? '\$$amountPerPerson'
+      : '\$$amount / ${totalPersonsPay.length} = \$$amountPerPerson';
 
   ItemsBill copyWith({
     String? name,
@@ -43,6 +44,13 @@ class ItemsBill extends HiveObject {
         listPersons: List<UserBill>.from(
             json[jsonListPersonsKey].map((x) => UserBill.fromJson(x))),
       );
+
+  Map<String, dynamic> toMap() => {
+        jsonNameKey: name,
+        jsonAmountKey: amount,
+        jsonListPersonsKey:
+            List<dynamic>.from(listPersons.map((x) => x.toMap())),
+      };
 
   @override
   String toString() =>

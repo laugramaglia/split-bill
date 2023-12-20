@@ -9,12 +9,6 @@ class EditGroupView extends StatelessWidget {
   final String groupId;
   const EditGroupView({super.key, @PathParam('id') required this.groupId});
 
-  // remove all tat is not a num
-  int removeNonNumeric(String str) {
-    RegExp regExp = RegExp(r'[^0-9]');
-    return int.parse(str.replaceAll(regExp, ''));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +20,7 @@ class EditGroupView extends StatelessWidget {
         title: const Text('Edit Group'),
       ),
       body: NewGroupForm(
-        group:
-            context.read<GroupProvider>().getByKey(removeNonNumeric(groupId)),
+        group: context.read<GroupProvider>().getByKey(int.parse(groupId)),
       ),
     );
   }

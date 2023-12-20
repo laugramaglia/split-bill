@@ -19,17 +19,20 @@ class UserBillAdapter extends TypeAdapter<UserBill> {
     return UserBill(
       name: fields[0] as String,
       hasToPay: fields[1] as bool,
+      payed: fields[2] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserBill obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.hasToPay);
+      ..write(obj.hasToPay)
+      ..writeByte(2)
+      ..write(obj.payed);
   }
 
   @override

@@ -14,10 +14,13 @@ class RoutesNav {
 
   // Profile routes
   static const String profile = 'profile';
+
+  // Export routes
+  static const String export = 'export';
 }
 
 // create extension
 extension RoutesNavExt on String {
   String get navTo => '/$this';
-  String navToWithParam(String param) => '$navTo/:$param';
+  String navToWithParam(String param) => '$navTo/$param';
 }

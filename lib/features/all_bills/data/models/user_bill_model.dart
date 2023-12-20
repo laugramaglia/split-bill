@@ -8,29 +8,44 @@ class UserBill extends HiveObject {
   String name;
   @HiveField(1)
   bool hasToPay;
+  @HiveField(2)
+  bool payed;
 
   UserBill({
     required this.name,
     required this.hasToPay,
+    this.payed = false,
   });
 
   UserBill copyWith({
     String? name,
     bool? hasToPay,
+    bool? payed,
   }) {
     return UserBill(
       name: name ?? this.name,
       hasToPay: hasToPay ?? this.hasToPay,
+      payed: payed ?? this.payed,
     );
   }
 
   factory UserBill.fromJson(Map<String, dynamic> json) => UserBill(
         name: json[jsonNameKey],
         hasToPay: json[jsonHasToPayKey],
+        payed: json[payedKey],
       );
 
-  static const String jsonNameKey = 'name', jsonHasToPayKey = 'hasToPay';
+  Map<String, dynamic> toMap() => {
+        jsonNameKey: name,
+        jsonHasToPayKey: hasToPay,
+        payedKey: payed,
+      };
+
+  static const String jsonNameKey = 'name',
+      jsonHasToPayKey = 'hasToPay',
+      payedKey = 'payed';
 
   @override
-  String toString() => 'UserBill(name: $name, hasToPay: $hasToPay)';
+  String toString() =>
+      'UserBill(name: $name, hasToPay: $hasToPay, payed: $payed)';
 }
