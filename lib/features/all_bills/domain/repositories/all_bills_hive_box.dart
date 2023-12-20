@@ -28,5 +28,7 @@ class AllBillsHiveBox {
     await _box.put(itemKey, bill);
   }
 
+  Bill? getBillById(key) => _box.get(key);
+
   Future<void> addToBox(Bill bill) async => await _box.add(bill);
 }

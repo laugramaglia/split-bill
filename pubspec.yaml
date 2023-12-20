@@ -24,6 +24,8 @@ dependencies:
   # fluttertoast: ^8.2.4
 # splash screen
   # flutter_native_splash: ^2.3.6
+# url 
+  url_launcher: ^6.2.2
 
 
 

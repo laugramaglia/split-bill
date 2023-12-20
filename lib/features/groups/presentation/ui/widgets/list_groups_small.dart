@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:split_bill/config/routes/routes_names.dart';
 import 'package:split_bill/features/groups/data/models/group.dart';
 import 'package:split_bill/features/groups/presentation/providers/group_provider.dart';
 
@@ -24,35 +26,43 @@ class _ListGroupsSmallState extends State<ListGroupsSmall> {
       error: (error) => const Center(
         child: Text('Error'),
       ),
-      data: (data) => Wrap(
-        spacing: 8,
-        runSpacing: 8,
-        children: [
-          ...data
-              .map((e) => ChoiceChip(
-                    showCheckmark: false,
-                    label: Text(e.name),
-                    avatar: CircleAvatar(
-                      child: Text(
-                        e.persons.length.toString(),
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ),
-                    selected: selectedGroup == e,
-                    onSelected: (value) {
-                      setState(() {
-                        if (value) {
-                          selectedGroup = e;
-                        } else {
-                          selectedGroup = null;
-                        }
-                        widget.onChange.call(selectedGroup?.persons);
-                      });
-                    },
-                  ))
-              .toList()
-        ],
-      ),
+      data: (data) => data.isEmpty
+          ? Center(
+              child: TextButton(
+                  onPressed: () {
+                    context.navigateNamedTo(
+                        RoutesNav.main.navTo + RoutesNav.allGroups.navTo);
+                  },
+                  child: const Text('Create gopup')))
+          : Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                ...data
+                    .map((e) => ChoiceChip(
+                          showCheckmark: false,
+                          label: Text(e.name),
+                          avatar: CircleAvatar(
+                            child: Text(
+                              e.persons.length.toString(),
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ),
+                          selected: selectedGroup == e,
+                          onSelected: (value) {
+                            setState(() {
+                              if (value) {
+                                selectedGroup = e;
+                              } else {
+                                selectedGroup = null;
+                              }
+                              widget.onChange.call(selectedGroup?.persons);
+                            });
+                          },
+                        ))
+                    .toList()
+              ],
+            ),
     );
   }
 }

@@ -1,10 +1,8 @@
 import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:split_bill/config/routes/routes_names.dart';
 import 'package:split_bill/features/add_bill/presentation/ui/widgets/add_item_form.dart';
 import 'package:split_bill/features/all_bills/data/models/bill_model.dart';
 import 'package:split_bill/features/all_bills/data/models/items_bill_model.dart';
@@ -37,6 +35,14 @@ class _NewBillViewState extends State<NewBillView> {
               icon: const Icon(Icons.check),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
+                  if (_billItems.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please add items'),
+                      ),
+                    );
+                    return;
+                  }
                   final Bill bill = Bill(
                     title: _title,
                     listItems: _billItems,
@@ -57,6 +63,12 @@ class _NewBillViewState extends State<NewBillView> {
             padding: const EdgeInsets.all(16),
             children: [
               TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
                 onChanged: (value) {
                   setState(() {
                     _title = value;
@@ -80,15 +92,17 @@ class _NewBillViewState extends State<NewBillView> {
               const SizedBox(height: 32),
 
               // Add items
-              const Text('Add items *'),
-              AddItemForm(
-                listUsers: _listUsersStrings,
-                onSubmit: (listItems) {
-                  setState(() {
-                    _billItems = listItems;
-                  });
-                },
-              ),
+              if (_listUsersStrings.isNotEmpty) ...[
+                const Text('Add items *'),
+                AddItemForm(
+                  listUsers: _listUsersStrings,
+                  onSubmit: (listItems) {
+                    setState(() {
+                      _billItems = listItems;
+                    });
+                  },
+                ),
+              ]
             ],
           ),
         ));
