@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:split_bill/common/enum/state_widget_type.dart';
 import 'package:split_bill/common/widgets/hero_card_animation_small.dart';
+import 'package:split_bill/config/routes/app_router.gr.dart';
 import 'package:split_bill/config/routes/routes_names.dart';
 import 'package:split_bill/features/all_bills/data/models/bill_model.dart';
 import 'package:split_bill/features/all_bills/data/models/items_bill_model.dart';
@@ -30,8 +31,7 @@ class BillCard extends StatelessWidget {
             IconButton(
                 color: Theme.of(context).colorScheme.primary,
                 onPressed: () {
-                  context.router.navigateNamed(RoutesNav.allBills.navTo +
-                      RoutesNav.export.navToWithParam(item.key.toString()));
+                  context.router.navigate(ExportView(bill: item));
                 },
                 icon: const Icon(Icons.send)),
           ]),
