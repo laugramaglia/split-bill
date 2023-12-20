@@ -9,6 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i12;
+import 'package:flutter/cupertino.dart' as _i15;
 import 'package:flutter/material.dart' as _i13;
 import 'package:split_bill/config/routes/empty_auto_router.dart' as _i1;
 import 'package:split_bill/features/add_bill/presentation/ui/views/add_bill_view.dart'
@@ -97,14 +98,12 @@ abstract class $AppRouter extends _i12.RootStackRouter {
       );
     },
     ExportView.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<ExportViewArgs>(
-          orElse: () => ExportViewArgs(id: pathParams.getString('id')));
+      final args = routeData.argsAs<ExportViewArgs>();
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i8.ExportView(
           key: args.key,
-          id: args.id,
+          bill: args.bill,
         ),
       );
     },
@@ -294,16 +293,15 @@ class EditeBillViewArgs {
 /// [_i8.ExportView]
 class ExportView extends _i12.PageRouteInfo<ExportViewArgs> {
   ExportView({
-    _i13.Key? key,
-    required String id,
+    _i15.Key? key,
+    required _i14.Bill bill,
     List<_i12.PageRouteInfo>? children,
   }) : super(
           ExportView.name,
           args: ExportViewArgs(
             key: key,
-            id: id,
+            bill: bill,
           ),
-          rawPathParams: {'id': id},
           initialChildren: children,
         );
 
@@ -316,16 +314,16 @@ class ExportView extends _i12.PageRouteInfo<ExportViewArgs> {
 class ExportViewArgs {
   const ExportViewArgs({
     this.key,
-    required this.id,
+    required this.bill,
   });
 
-  final _i13.Key? key;
+  final _i15.Key? key;
 
-  final String id;
+  final _i14.Bill bill;
 
   @override
   String toString() {
-    return 'ExportViewArgs{key: $key, id: $id}';
+    return 'ExportViewArgs{key: $key, bill: $bill}';
   }
 }
 

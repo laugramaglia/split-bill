@@ -62,8 +62,6 @@ class AllBillRepository {
 
   // *****************************************
 
-  getBillById(key) => AllBillsHiveBox.instance.getBillById(key);
-
   // *****************************************
   // * Users
   // *****************************************

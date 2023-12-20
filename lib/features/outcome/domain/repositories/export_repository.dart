@@ -31,7 +31,7 @@ class ExportRepository {
 
     message += 'Payment data:\n';
     for (String user in people) {
-      message += '$user: <Payment account>';
+      message += '$user: <Payment account> \n';
     }
     message += '-----------\n';
     message += 'Expenses:\n';

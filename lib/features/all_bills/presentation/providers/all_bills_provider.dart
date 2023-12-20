@@ -53,10 +53,6 @@ class AllBillsProvider extends AsyncStateNotifier<AllBills> {
   }
   // *****************************************
 
-  Future<Bill?> getBillById(key) async {
-    return await billRepository.getBillById(key);
-  }
-
   // *****************************************
   // * Users
   // *****************************************

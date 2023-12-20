@@ -17,8 +17,7 @@ class AppRouter extends $AppRouter {
               children: [
                 AutoRoute(page: AllBillsView.page, path: ''),
                 AutoRoute(page: EditeBillView.page, path: RoutesNav.editBill),
-                AutoRoute(
-                    path: '${RoutesNav.export}/:id', page: ExportView.page)
+                AutoRoute(path: RoutesNav.export, page: ExportView.page)
               ]),
 
           //AddBill route
