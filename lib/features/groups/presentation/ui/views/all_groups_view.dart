@@ -38,8 +38,10 @@ class AllGroupsView extends StatelessWidget {
             ],
           ),
           // Sliver List
-          ListAllGroups(
-            onTap: () => navNewGroup(context),
+          SliverToBoxAdapter(
+            child: ListAllGroups(
+              onTap: () => navNewGroup(context),
+            ),
           )
         ],
       ),

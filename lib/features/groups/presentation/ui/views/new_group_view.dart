@@ -16,7 +16,9 @@ class AddGroupView extends StatelessWidget {
         ),
         title: const Text('New Group'),
       ),
-      body: const NewGroupForm(),
+      body: NewGroupForm(
+        onSuccess: () => context.router.pop(),
+      ),
     );
   }
 }

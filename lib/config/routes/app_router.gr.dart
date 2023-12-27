@@ -113,12 +113,6 @@ abstract class $AppRouter extends _i12.RootStackRouter {
         child: const _i9.HomePage(),
       );
     },
-    NewBillView.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i10.NewBillView(),
-      );
-    },
     ProfileView.name: (routeData) {
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,

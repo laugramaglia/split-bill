@@ -33,8 +33,11 @@ class _AddPersonSectionState extends State<AddPersonSection> {
               icon: const Icon(Icons.add),
               onPressed: () {
                 setState(() {
-                  chips.add(textEditingController.text);
-                  widget.onChange(chips);
+                  if (textEditingController.text.isNotEmpty) {
+                    chips.add(textEditingController.text.capitalicize());
+                    widget.onChange(chips);
+                  }
+
                   textEditingController.clear();
                 });
               },
@@ -67,5 +70,11 @@ class _AddPersonSectionState extends State<AddPersonSection> {
         ),
       ],
     );
+  }
+}
+
+extension StringExtension on String {
+  String capitalicize() {
+    return '${this[0].toUpperCase()}${substring(1)}';
   }
 }

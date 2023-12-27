@@ -20,6 +20,7 @@ class EditGroupView extends StatelessWidget {
         title: const Text('Edit Group'),
       ),
       body: NewGroupForm(
+        onSuccess: () => context.router.pop(),
         group: context.read<GroupProvider>().getByKey(int.parse(groupId)),
       ),
     );

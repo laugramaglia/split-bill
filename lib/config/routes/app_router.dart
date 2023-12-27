@@ -27,7 +27,6 @@ class AppRouter extends $AppRouter {
               initial: true,
               children: [
                 AutoRoute(page: AddBillView.page, path: '', initial: true),
-                AutoRoute(path: RoutesNav.addBill, page: NewBillView.page),
                 AutoRoute(
                     page: AddBillEmtyPage.page,
                     path: RoutesNav.allGroups,

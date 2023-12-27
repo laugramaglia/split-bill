@@ -7,10 +7,6 @@ class TranfersResume extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(
-        'Transfers',
-        style: Theme.of(context).textTheme.titleLarge,
-      ),
       for (final e in tranfers)
         ListTile(
           title: Row(

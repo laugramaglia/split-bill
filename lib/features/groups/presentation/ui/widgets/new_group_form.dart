@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +8,13 @@ import '../../providers/group_provider.dart';
 
 class NewGroupForm extends StatefulWidget {
   final Group? group;
-  const NewGroupForm({super.key, this.group});
+  final bool showDescription;
+  final void Function() onSuccess;
+  const NewGroupForm(
+      {super.key,
+      this.group,
+      this.showDescription = true,
+      required this.onSuccess});
 
   @override
   State<NewGroupForm> createState() => _NewGroupFormState();
@@ -31,72 +35,78 @@ class _NewGroupFormState extends State<NewGroupForm> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: ListView(
+      child: Padding(
         padding: const EdgeInsets.all(16),
-        children: [
-          // Group Name
-          TextFormField(
-            initialValue: widget.group?.name,
-            decoration: const InputDecoration(
-              labelText: 'Group Name *',
+        child: Column(
+          children: [
+            // Group Name
+            TextFormField(
+              initialValue: widget.group?.name,
+              decoration: const InputDecoration(
+                labelText: 'Group Name *',
+              ),
+              onChanged: (value) {
+                _map[Group.jsonNameKey] = value;
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a name';
+                }
+                return null;
+              },
             ),
-            onChanged: (value) {
-              _map[Group.jsonNameKey] = value;
-            },
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter a name';
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 16),
-          // Group Description
-          TextFormField(
-            initialValue: widget.group?.description,
-            onChanged: (value) {
-              _map[Group.jsonDescriptionKey] = value;
-            },
-            decoration: const InputDecoration(
-              labelText: 'Group Description',
+            const SizedBox(height: 16),
+            // Group Description
+            if (widget.showDescription) ...[
+              TextFormField(
+                initialValue: widget.group?.description,
+                onChanged: (value) {
+                  _map[Group.jsonDescriptionKey] = value;
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Group Description',
+                ),
+              ),
+              const SizedBox(height: 16),
+            ],
+            // Persons
+
+            // Add Person Section
+            AddPersonSection(
+              initialPersons: widget.group?.persons,
+              onChange: (List<String> persons) {
+                _map[Group.jsonPersonsKey] = persons;
+              },
             ),
-          ),
-          const SizedBox(height: 16), // Persons
 
-          // Add Person Section
-          AddPersonSection(
-            initialPersons: widget.group?.persons,
-            onChange: (List<String> persons) {
-              _map[Group.jsonPersonsKey] = persons;
-            },
-          ),
+            const SizedBox(height: 16),
+            // Submit Button
+            ElevatedButton(
+              onPressed: () {
+                // check if _map['persons'] is null
+                if (_map[Group.jsonPersonsKey] == null ||
+                    _map[Group.jsonPersonsKey].isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Please add at least one person'),
+                    ),
+                  );
+                  return;
+                }
 
-          const SizedBox(height: 16),
-          // Submit Button
-          ElevatedButton(
-            onPressed: () {
-              // check if _map['persons'] is null
-              if (_map[Group.jsonPersonsKey] == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Please add at least one person'),
-                  ),
-                );
-                return;
-              }
-
-              // Validate returns true if the form is valid, or false otherwise.
-              if (_formKey.currentState!.validate()) {
-                Group group = Group.fromMap(_map);
-                context
-                    .read<GroupProvider>()
-                    .addGroup(group, widget.group?.key)
-                    .then((_) => context.router.pop());
-              }
-            },
-            child: const Text('Submit'),
-          ),
-        ],
+                // Validate returns true if the form is valid, or false otherwise.
+                if (_formKey.currentState!.validate()) {
+                  Group group = Group.fromMap(_map);
+                  context
+                      .read<GroupProvider>()
+                      .addGroup(group, widget.group?.key)
+                      .then((_) => widget.onSuccess.call());
+                }
+              },
+              child: const Text('Submit'),
+            ),
+          ],
+        ),
       ),
     );
   }
