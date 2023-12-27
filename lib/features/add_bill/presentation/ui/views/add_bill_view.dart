@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:split_bill/config/routes/routes_names.dart';
+import 'package:split_bill/features/add_bill/presentation/ui/views/add_bill_pop_modal.dart';
 
 @RoutePage()
 class AddBillView extends StatelessWidget {
@@ -29,8 +30,9 @@ class AddBillView extends StatelessWidget {
                 dimension: dimension,
                 icon: Icons.add,
                 title: 'Add Bill',
-                onTap: () => context.router.navigateNamed(
-                    RoutesNav.main.navTo + RoutesNav.addBill.navTo),
+                onTap: () => AddBillPopModal.showModal(context),
+                // context.router.navigateNamed(
+                //     RoutesNav.main.navTo + RoutesNav.addBill.navTo),
               ),
               CardButton(
                   dimension: dimension,

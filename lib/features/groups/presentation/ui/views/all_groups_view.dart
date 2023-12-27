@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:split_bill/config/routes/routes_names.dart';
 import 'package:split_bill/features/groups/presentation/providers/group_provider.dart';
 import 'package:split_bill/features/groups/presentation/ui/widgets/group_card.dart';
+import 'package:split_bill/features/groups/presentation/ui/widgets/list_all_groups.dart';
 
 @RoutePage()
 class AllGroupsView extends StatelessWidget {
@@ -37,39 +38,9 @@ class AllGroupsView extends StatelessWidget {
             ],
           ),
           // Sliver List
-          Builder(builder: (context) {
-            final state = context.watch<GroupProvider>().state;
-
-            return state.map(
-              loading: () => const SliverToBoxAdapter(
-                  child: Center(
-                child: CupertinoActivityIndicator(),
-              )),
-              error: (err) => SliverToBoxAdapter(
-                  child: Center(
-                child: Text(err.message),
-              )),
-              data: (data) => data.isEmpty
-                  ? SliverToBoxAdapter(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Center(
-                            child: Text('No groups found'),
-                          ),
-                          ElevatedButton(
-                            onPressed: () => navNewGroup(context),
-                            child: const Text('Add Group'),
-                          )
-                        ],
-                      ),
-                    )
-                  : SliverList.builder(
-                      itemCount: data.length,
-                      itemBuilder: (BuildContext context, int index) =>
-                          GroupCard(data: data[index])),
-            );
-          }),
+          ListAllGroups(
+            onTap: () => navNewGroup(context),
+          )
         ],
       ),
     );
